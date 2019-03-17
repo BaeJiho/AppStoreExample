@@ -32,15 +32,25 @@ class CategoryCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate
         return collectionView
     }()
     
+    let buttonLineView: UIView = {
+        let line = UIView()
+        line.backgroundColor = UIColor(white: 0.5, alpha: 0.4)
+        line.translatesAutoresizingMaskIntoConstraints = false
+        return line
+    }()
+    
     func setupView() {
         backgroundColor = UIColor.clear
         addSubview(appsCollectionView)
+        addSubview(buttonLineView)
         appsCollectionView.delegate = self
         appsCollectionView.dataSource = self
         appsCollectionView.register(AppListViewCell.self, forCellWithReuseIdentifier: cellId)
         
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": buttonLineView]))
+        
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": buttonLineView]))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
