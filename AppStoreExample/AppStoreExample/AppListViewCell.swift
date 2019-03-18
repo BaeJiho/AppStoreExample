@@ -9,6 +9,21 @@
 import UIKit
 
 class AppListViewCell: UICollectionViewCell {
+    
+    var apps: App? {
+        didSet {
+            guard let data = apps else {return}
+            title.text = data.name
+            categoryTitle.text = data.category
+            if data.price == nil {
+                priceTitle.isHidden = true
+            } else {
+                priceTitle.isHidden = false
+            }
+            priceTitle.text = "\(data.price ?? 0)"
+            imageView.image = UIImage(named: data.imageName ?? "")
+        }
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -57,10 +72,11 @@ class AppListViewCell: UICollectionViewCell {
         addSubview(title)
         addSubview(categoryTitle)
         addSubview(priceTitle)
+        
         imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
         title.frame = CGRect(x: 0, y: frame.width + 2, width: frame.width, height: 40)
-        categoryTitle.frame = CGRect(x: 0, y: frame.width + 42, width: frame.width, height: 20)
-        priceTitle.frame = CGRect(x: 0, y: frame.width + 58, width: frame.width, height: 20)
+        categoryTitle.frame = CGRect(x: 0, y: frame.width + 38, width: frame.width, height: 20)
+        priceTitle.frame = CGRect(x: 0, y: frame.width + 55, width: frame.width, height: 20)
     }
 
 }
