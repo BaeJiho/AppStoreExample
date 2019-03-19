@@ -9,12 +9,14 @@
 import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+    var vc: AppStoreViewController?
     private let cellId = "appId"
+        
     var categories: Categories? {
         didSet {
             guard let data = categories else {return}
             nameLabel.text = data.name
+            appsCollectionView.reloadData()
         }
     }
 
@@ -90,6 +92,11 @@ class CategoryCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let app = categories?.apps[indexPath.item] else {return}
+        vc?.showDetailView(app: app)
     }
 }
 

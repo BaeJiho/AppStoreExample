@@ -13,6 +13,7 @@ class AppListViewCell: UICollectionViewCell {
     var apps: App? {
         didSet {
             guard let data = apps else {return}
+            print(apps?.imageName)
             title.text = data.name
             categoryTitle.text = data.category
             if data.price == nil {

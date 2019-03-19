@@ -8,11 +8,14 @@
 
 import Foundation
 
+
 struct AppCategory: Decodable {
+    var bannerCategory: Categories
     var appCategory: [Categories]
     
     private enum CodingKeys: String, CodingKey {
         case appCategory = "categories"
+        case bannerCategory
     }
 }
 
@@ -21,7 +24,7 @@ struct Categories: Decodable {
     var apps: [App]
     var type: String
     
-    static func fetchesAppData(_ completionHandler: @escaping ([Categories]) -> ()) {
+    static func fetchesAppData(_ completionHandler: @escaping (AppCategory) -> ()) {
         let url = "https://api.letsbuildthatapp.com/appstore/featured"
         guard let urlString = URL(string: url) else {return}
         URLSession.shared.dataTask(with: urlString) { (data, response, error) in
@@ -29,7 +32,7 @@ struct Categories: Decodable {
             do {
                 let categoriesData = try JSONDecoder().decode(AppCategory.self, from: data)
                 DispatchQueue.main.async(execute: {
-                    completionHandler(categoriesData.appCategory ?? [])
+                    completionHandler(categoriesData)
                 })
             } catch {
                 
