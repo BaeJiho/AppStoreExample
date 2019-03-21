@@ -44,16 +44,20 @@ class AppCategoryCell: UICollectionViewCell,UICollectionViewDelegate, UICollecti
         appCollectionView.dataSource = self
         appCollectionView.register(CategoriesCell.self, forCellWithReuseIdentifier: categoriesCellId)
         
-        addSubview(appCollectionView)
-        addSubview(sectionTitle)
+        [appCollectionView, sectionTitle].forEach { (view) in
+            addSubview(view)
+        }
         //Anchor
-        appCollectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        appCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        appCollectionView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        appCollectionView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        appCollectionView.anchor(top: sectionTitle.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 14, left: 14, bottom: 0, right: 14), size: .zero)
         
-        sectionTitle.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        sectionTitle.topAnchor.constraint(equalTo: <#T##NSLayoutAnchor<NSLayoutYAxisAnchor>#>, constant: <#T##CGFloat#>)
+        sectionTitle.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: appCollectionView.topAnchor, padding: .init(top: 10, left: 14, bottom: 14, right: 0), size: .zero)
+        
+        
+//        appCollectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+//        appCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+//        appCollectionView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+//        appCollectionView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        
         
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appCollectionView]))
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appCollectionView]))
@@ -68,9 +72,9 @@ class AppCategoryCell: UICollectionViewCell,UICollectionViewDelegate, UICollecti
         return categoriesCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: frame.height - 32)
+        return CGSize(width: 100, height: frame.height - 50)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+//    }
 }

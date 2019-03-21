@@ -22,7 +22,7 @@ class CategoriesCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let v = UIImageView()
         v.image = UIImage(named: "frozen")
-        v.contentMode = .scaleAspectFill
+        v.contentMode = .scaleAspectFit
         v.layer.cornerRadius = 16
         v.layer.masksToBounds = true
         return v
