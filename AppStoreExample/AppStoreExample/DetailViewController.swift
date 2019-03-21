@@ -13,7 +13,7 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     
     private let detailCellId = "detailCellId"
     private let shotCellId = "shotCellId"
-    
+    private let descriptionCellId = "descriptionCellId"
     var app: App? {
         didSet {
             navigationItem.title = app?.name
@@ -45,6 +45,7 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         collectionView.alwaysBounceVertical = true
         collectionView.register(DetailCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: detailCellId)
         collectionView.register(ScreenShotCell.self, forCellWithReuseIdentifier: shotCellId)
+        collectionView.register(DetailDescriptionCell.self, forCellWithReuseIdentifier: descriptionCellId)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -53,13 +54,25 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         return header
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 1 {
+            let descriptionCell = collectionView.dequeueReusableCell(withReuseIdentifier: descriptionCellId, for: indexPath) as! DetailDescriptionCell
+            descriptionCell.textView.attributedText = attributtedText()
+            return descriptionCell
+        }
         let shotCell = collectionView.dequeueReusableCell(withReuseIdentifier: shotCellId, for: indexPath) as! ScreenShotCell
         shotCell.app = app
         return shotCell
+    }
+    private func attributtedText() -> NSAttributedString {
+        let text = NSMutableAttributedString(string: "Description\n", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 16)])
+        if let descriptionText = app?.description {
+            text.append(NSAttributedString(string: descriptionText, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)]))
+        }
+        return text
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

@@ -39,7 +39,7 @@ class ScreenShotCell: BaseCell, UICollectionViewDelegate, UICollectionViewDataSo
         screenShotView.delegate = self
         screenShotView.dataSource = self
         
-        screenShotView.register(shotCell.self, forCellWithReuseIdentifier: detailShotCellId)
+        screenShotView.register(ShotCell.self, forCellWithReuseIdentifier: detailShotCellId)
         addConstraintwithVisualFormat(Formet: "H:|[v0]|", Views: screenShotView)
         addConstraintwithVisualFormat(Formet: "H:|[v0]|", Views: bottomLine)
         addConstraintwithVisualFormat(Formet: "V:|[v0][v1(1)]|", Views: screenShotView, bottomLine)
@@ -56,7 +56,7 @@ class ScreenShotCell: BaseCell, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let shotCell = collectionView.dequeueReusableCell(withReuseIdentifier: detailShotCellId, for: indexPath) as! shotCell
+        let shotCell = collectionView.dequeueReusableCell(withReuseIdentifier: detailShotCellId, for: indexPath) as! ShotCell
         if let name = app?.screenShots?[indexPath.item] {
             shotCell.imageView.image = UIImage(named: name)
         }
@@ -71,24 +71,4 @@ class ScreenShotCell: BaseCell, UICollectionViewDelegate, UICollectionViewDataSo
     
 }
 
-class shotCell: BaseCell {
 
-    
-    let imageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "frozen")
-        view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = 14
-        return view
-    }()
-    
-    override func setupView() {
-        backgroundColor = .clear
-        layer.masksToBounds = true
-        addSubview(imageView)
-//
-        addConstraintwithVisualFormat(Formet: "H:|[v0]|", Views: imageView)
-        addConstraintwithVisualFormat(Formet: "V:|[v0]|", Views: imageView)
-        
-    }
-}
