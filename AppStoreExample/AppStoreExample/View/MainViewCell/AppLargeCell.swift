@@ -9,6 +9,7 @@
 import UIKit
 
 class AppLargeCell: AppListViewCell {
+    
     override func setupView() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)

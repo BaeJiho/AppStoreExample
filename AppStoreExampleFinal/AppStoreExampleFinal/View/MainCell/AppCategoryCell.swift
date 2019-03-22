@@ -10,6 +10,15 @@ import UIKit
 
 class AppCategoryCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var app: Categories? {
+        didSet {
+            if let name = app?.name {
+                sectionTitle.text = name
+            }
+            appCollectionView.reloadData()
+        }
+    }
+    
     private let categoriesCellId = "categoriesCellId"
     
     override init(frame: CGRect) {
@@ -64,11 +73,17 @@ class AppCategoryCell: UICollectionViewCell,UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        
+        if let app = app?.apps {
+            return app.count
+        }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let categoriesCell = collectionView.dequeueReusableCell(withReuseIdentifier: categoriesCellId, for: indexPath) as! CategoriesCell
+        categoriesCell.app = app?.apps[indexPath.item]
         return categoriesCell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
