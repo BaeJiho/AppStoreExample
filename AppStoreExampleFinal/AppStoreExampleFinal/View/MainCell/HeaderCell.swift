@@ -8,45 +8,29 @@
 
 import UIKit
 
-class HeaderCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HeaderCell: AppCategoryCell {
     
     private let cellId = "headerInfoCell"
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    override func setupView() {
+        appCollectionView.delegate = self
+        appCollectionView.dataSource = self
+        appCollectionView.register(HeaderInfoCell.self, forCellWithReuseIdentifier: cellId)
+        
+        addSubview(appCollectionView)
+        appCollectionView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 14, bottom: 0, right: 14), size: .zero)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let headerCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        view.backgroundColor = .red
-        return view
-    }()
-    
-    func setupView() {
-        addSubview(headerCollectionView)
-        headerCollectionView.delegate = self
-        headerCollectionView.dataSource = self
-        headerCollectionView.register(HeaderInfoCell.self, forCellWithReuseIdentifier: cellId)
-        headerCollectionView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .zero, size: .zero)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HeaderInfoCell
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: frame.height)
-    }
     
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: frame.width - 50, height: 200)
+    }
 }

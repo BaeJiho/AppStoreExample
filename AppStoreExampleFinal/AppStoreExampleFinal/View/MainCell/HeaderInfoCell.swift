@@ -10,8 +10,7 @@ import UIKit
 
 class HeaderInfoCell: CategoriesCell {
     override func setupView() {
-        backgroundColor = .blue
-//        addSubview(imageView)
-//        imageView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .zero, size: .zero)
+        addSubview(imageView)
+        imageView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: self.bottomAnchor, padding: .zero, size: .zero)
     }
 }
