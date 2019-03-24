@@ -10,6 +10,7 @@ import UIKit
 
 class HeaderCell: AppCategoryCell {
     
+    
     private let cellId = "headerInfoCell"
     
     override func setupView() {
@@ -22,11 +23,15 @@ class HeaderCell: AppCategoryCell {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return app?.apps.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HeaderInfoCell
+        if let imageName = app?.apps[indexPath.item].imageName{
+            
+            cell.imageView.image = UIImage(named: imageName)
+        }
         return cell
     }
     
