@@ -15,6 +15,17 @@ class CategoriesCell: UICollectionViewCell {
             if let imageName = app?.imageName {
                 imageView.image = UIImage(named: imageName)
             }
+            if let name = app?.name {
+                title.text = name
+            }
+            if let theme = app?.category {
+                themeName.text = theme
+            }
+            if let price = app?.price {
+                priceName.text = "$\(price)"
+            } else {
+                priceName.text = ""
+            }
         }
     }
     
@@ -51,7 +62,7 @@ class CategoriesCell: UICollectionViewCell {
         return view
     }()
     
-    let price: UILabel = {
+    let priceName: UILabel = {
         let view = UILabel()
         view.text = "3.00"
         view.font = UIFont.systemFont(ofSize: 14)
@@ -60,13 +71,13 @@ class CategoriesCell: UICollectionViewCell {
     
     func setupView() {
         
-        [imageView, title, themeName, price].forEach { (view) in
+        [imageView, title, themeName, priceName].forEach { (view) in
             self.addSubview(view)
         }
         
         imageView.anchor(top: self.topAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, bottom: title.topAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 0), size: .init(width: 50, height: 100))
         title.anchor(top: imageView.bottomAnchor, leading: imageView.leadingAnchor, trailing: imageView.trailingAnchor, bottom: themeName.topAnchor, padding: .zero, size: .zero)
-        themeName.anchor(top: title.bottomAnchor, leading: imageView.leadingAnchor, trailing: imageView.trailingAnchor, bottom: price.topAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 20))
-        price.anchor(top: themeName.bottomAnchor, leading: imageView.leadingAnchor, trailing: imageView.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .zero)
+        themeName.anchor(top: title.bottomAnchor, leading: imageView.leadingAnchor, trailing: imageView.trailingAnchor, bottom: priceName.topAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 100, height: 20))
+        priceName.anchor(top: themeName.bottomAnchor, leading: imageView.leadingAnchor, trailing: imageView.trailingAnchor, bottom: self.bottomAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .zero)
     }
 }
